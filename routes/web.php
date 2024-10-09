@@ -5,7 +5,23 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'dashboard')->name('dashboard');
 Route::get('/', function () {
-    return view('index');
+    return view('Home', ['title'=>'Home Page']);
+});
+
+Route::get('/AboutUs', function () {
+    return view('AboutUs',['title'=>'About Us']);
+});
+
+Route::get('/Production', function () {
+    return view('Production',['title'=>'Production']);
+});
+
+Route::get('/Events', function () {
+    return view('Events',['title'=>'Events']);
+});
+
+Route::get('/Partner', function () {
+    return view('Partner',['title'=>'Partner']);
 });
 
 Route::get('/dashboard', function () {
