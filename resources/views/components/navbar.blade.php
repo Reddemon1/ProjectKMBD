@@ -8,11 +8,12 @@
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="/" class  =" {{request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="page">Home</a>
-              <a href="/AboutUs" class=" {{request()->is('AboutUs') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About Us</a>
-              <a href="/Production" class="{{request()->is('Production') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Production</a>
-              <a href="/Events" class="{{request()->is('Events') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}}  rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Events</a>
-              <a href="/Partner" class="{{request()->is('Partner') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}}  rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Partner</a>
+              <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+              <x-nav-link href="/AboutUs" :active="request()->is('AboutUs')">About Us</x-nav-link>
+              <x-nav-link href="/Production" :active="request()->is('Production')">Production</x-nav-link>
+              <x-nav-link href="/Events" :active="request()->is('Events')">Events</x-nav-link>
+              <x-nav-link href="/Partner" :active="request()->is('Partner')">Partner</x-nav-link>
+              <x-nav-link href="/Login" :active="request()->is('Login')">Login</x-nav-link>
             </div>
           </div>
         </div>
