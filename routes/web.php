@@ -8,6 +8,11 @@ Route::get('/', function () {
     return view('Home', ['title'=>'Home Page']);
 });
 
+Route::get('/Login', function () {
+    return view('auth.Login', ['title'=>'Login Page']);
+});
+
+
 Route::get('/AboutUs', function () {
     return view('AboutUs',['title'=>'About Us']);
 });
@@ -33,5 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
