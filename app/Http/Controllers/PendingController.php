@@ -29,7 +29,7 @@ class PendingController extends Controller
      */
     public function create()
     {
-        //
+        return redirect('/');
     }
 
     /**
