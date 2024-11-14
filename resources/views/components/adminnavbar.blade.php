@@ -3,22 +3,20 @@
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <img class="h-10 w-10" src="img/LogoKMBD.png" alt="Your Company">
+                    <img class="h-10 w-10" src="{{ asset('img/LogoKMBD.png') }}" alt="Your Company">
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-                        <x-nav-link href="/AboutUs" :active="request()->is('AboutUs')">About Us</x-nav-link>
-                        <x-nav-link href="/Production" :active="request()->is('Production')">Production</x-nav-link>
-                        <x-nav-link href="/Article" :active="request()->is('Article')">Article</x-nav-link>
-
-                        <x-nav-link href="/Events" :active="request()->is('Events')">Events</x-nav-link>
-                        <x-nav-link href="/Partner" :active="request()->is('Partner')">Partner</x-nav-link>
-
-                        @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'aktivis'))
-                            <x-nav-link href="/Control-Panel" :active="request()->is('Control-Panel')">{{ Auth::user()->role == 'admin' ? "Admin" : "Aktivis"}}</x-nav-link>
+                        <x-nav-link href="/Control-Panel" :active="request()->is('/Control-Panel')">Dashboard</x-nav-link>
+                        @if (Auth::check() && Auth::user()->role == 'admin')
+                            <x-nav-link href="{{ route('about-us') }}" :active="request()->is('AboutUs')">About Us</x-nav-link>
+                            <x-nav-link href="{{ route('all-production') }}" :active="request()->is('Production')">Production</x-nav-link>
+                            <x-nav-link href="{{ route('all-articles') }}" :active="request()->is('Articles')">Articles</x-nav-link>
+                            <x-nav-link href="{{ route('all-partners') }}" :active="request()->is('Partner')">Partners</x-nav-link>
                         @endif
+                        <x-nav-link href="{{ route('all-events') }}" :active="request()->is('Events')">Events</x-nav-link>
+                        <x-nav-link href="{{ route('pending-event-req') }}" :active="request()->is('Events')">Pending Events</x-nav-link>
 
                     </div>
                 </div>
@@ -61,11 +59,11 @@
                     </div>
                 </div>
             @else
-            <div>
-              <x-nav-link href="/Login" :active="request()->is('Login')">Login</x-nav-link>
-              <x-nav-link href="/Register" :active="request()->is('Register')">Register</x-nav-link>
+                <div>
+                    <x-nav-link href="/Login" :active="request()->is('Login')">Login</x-nav-link>
+                    <x-nav-link href="/Register" :active="request()->is('Register')">Register</x-nav-link>
 
-            </div>
+                </div>
             @endif
 
             <div class="-mr-2 flex md:hidden">

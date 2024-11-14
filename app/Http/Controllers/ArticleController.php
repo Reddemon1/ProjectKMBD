@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -13,7 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Article::all();
+        return view("admin/article/allarticle", compact('datas'));
     }
 
     /**
@@ -21,7 +23,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin/article/addarticle");
     }
 
     /**
@@ -29,38 +31,50 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $filePath = $request->file('image')->store('articles', 'public');
+
+        $validated['image'] = "storage/" . $filePath;
+
+        Article::create($validated);
+
+        return redirect(route('all-articles'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Article $article)
+    public function edit($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Article $article)
-    {
-        //
+        $article = Article::find($id);
+        return view('admin.article.editarticle', compact('article'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, $id)
     {
-        //
+        $article = Article::find($id);
+        $validated = $request->validated();
+        if($request->image != NULL){
+            Storage::delete($article->image);
+            $filePath = $request->file('image')->store('articles', 'public');
+            $validated['image'] = "storage/" . $filePath;
+        }
+
+        $article->update($validated);
+        return redirect(route('all-articles'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        //
+        $data = Article::findOrFail($id);
+        // echo asset($data->image);
+        Storage::delete($data->image);
+        $data->delete();
+
+        return redirect(route('all-articles'));
     }
 }

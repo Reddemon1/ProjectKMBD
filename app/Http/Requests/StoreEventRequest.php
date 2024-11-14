@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreEventRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'aktivis');
     }
 
     /**
@@ -22,7 +23,20 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:100',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'description' => 'required',
+            'date' => 'required|date',
+            'registration_link' => 'required',
+            'user_id' => 'nullable',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'Isi :attribute kocak',
+            'image.max' => 'Foto maksimal 1mb woe',
+            'date' => 'Format tanggal woi'
         ];
     }
 }

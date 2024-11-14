@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Pending;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -14,7 +16,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Event::all();
+        $datas = Event::with('user');
+        if(Auth::user()->role == 'aktivis'){
+            $datas = $datas->where('user_id','=',Auth::id())->get();
+        }else{
+            $datas = $datas->get();
+        }
+        return view("admin/event/allevent
+        ", compact('datas'));
     }
 
     /**
@@ -22,15 +31,26 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin/event/addevent");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
-        Event::create($request->all());
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        $filePath = $request->file('image')->store('events', 'public');
+
+        $validated['image'] = "storage/" . $filePath;
+        if(Auth::user()->role == 'admin'){
+            Event::create($validated);
+        }else if(Auth::user()->role == 'aktivis'){
+            Pending::create($validated);
+        }
+
+        return redirect(route('all-events'));
     }
 
     /**

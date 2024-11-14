@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText("description");
             $table->date("date");
             $table->string("registration_link");
+            $table->string("message")->nullable();
+            $table->enum('status',['accepted','rejected','pending','revision'])->default('pending');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

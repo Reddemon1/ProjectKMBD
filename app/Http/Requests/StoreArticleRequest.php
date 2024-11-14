@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreArticleRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class StoreArticleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        return Auth::check() && Auth::user()->role == 'admin';
     }
 
     /**
@@ -22,7 +24,19 @@ class StoreArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:100',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'content' => 'required',
+            'date' => 'required|date',
+            'writer' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'Isi :attribute kocak',
+            'image.max' => 'Foto maksimal 1mb woe',
+            'date' => 'Format tanggal woi'
         ];
     }
 }

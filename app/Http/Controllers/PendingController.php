@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pending;
 use App\Http\Requests\StorePendingRequest;
 use App\Http\Requests\UpdatePendingRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PendingController extends Controller
 {
@@ -13,7 +14,14 @@ class PendingController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Pending::with('user');
+        if(Auth::user()->role == 'aktivis'){
+            $datas = $datas->where('user_id','=',Auth::id())->get();
+        }else{
+            $datas = $datas->get();
+        }
+        return view("admin/event/pending
+        ", compact('datas'));
     }
 
     /**

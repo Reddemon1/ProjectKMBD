@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string("title");
             $table->string("image");
-            $table->longText("description");
+            $table->longText("content");
             $table->date("date");
             $table->string("writer");
             $table->timestamps();

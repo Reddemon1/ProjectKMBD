@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Request\Auth\RegisterRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +15,9 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             return redirect(route("home"));
+        }else{
+            session()->flash('login_check', true);
+            return redirect('/Login');
         }
     }
 
