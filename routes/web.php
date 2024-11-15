@@ -88,14 +88,17 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
         // Route::post('/req-new-article',[ArticleController::class,"store"]);
     });
 
-    
+
     Route::prefix("admin-event")->group(function(){
         Route::get('/all-events', [EventController::class,'index'])->name("all-events");
         Route::get('/add-event', [EventController::class,'create'])->name("add-new-event");
-        Route::get('/pending-event', [PendingController::class,'index'])->name("pending-event-req");
         Route::get('/edit-event/{id}', [EventController::class,'edit'])->name("edit-event");
-        
-        Route::get('/change-status/{id}', [EventController::class,'edit'])->name("change-status");
+
+        Route::get('/pending-event', [PendingController::class,'index'])->name("pending-event-req");
+        Route::post('/change-status/{id}', [PendingController::class,'updateStatus'])->name("change-status");
+        Route::post('/update-message/{id}', [PendingController::class,'updateMessage'])->name("update-message");
+
+
         Route::delete('/req-delete-event/{id}', [EventController::class,'destroy'])->name("req-delete-event");
         Route::post('/req-new-event',[EventController::class,"store"])->name('req-new-event');
         Route::put('/req-edit-event/{id}',[EventController::class,"update"])->name('req-edit-event');
@@ -122,7 +125,7 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
         Route::post('/req-edit-production',[ProductionController::class,"store"]);
         Route::post('/req-new-production',[ProductionController::class,"store"]);
     });
-    
+
     Route::prefix("admin-partner")->middleware(RoleMiddleware::class.':admin')->group(function(){
         Route::get('/all-partners', function() {
             $datas = Partner::all();

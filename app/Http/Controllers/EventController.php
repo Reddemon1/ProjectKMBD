@@ -6,8 +6,10 @@ use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Pending;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -64,24 +66,41 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        //
+        $event = Event::find($id);
+        $user_name = User::find($event->user_id);
+        return view('admin.event.editevent', compact(['event','user_name']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, $id)
     {
-        //
+        $article = Event::find($id);
+        $validated = $request->validated();
+        $request['user_id'] = $article->user_id;
+        if($request->image != NULL){
+            Storage::delete($article->image);
+            $filePath = $request->file('image')->store('events', 'public');
+            $validated['image'] = "storage/" . $filePath;
+        }
+
+        $article->update($validated);
+        return redirect(route('all-events'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
-        //
+        $data = Event::findOrFail($id);
+        // echo asset($data->image);
+        Storage::delete($data->image);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

@@ -37,23 +37,42 @@
                         <td class="px-6 py-4">{{ $data->registration_link }}</td>
                         <td class="px-6 py-4">
                             @if (Auth::user()->role == 'admin')
-                                <form action="{{ route('change-status',$data->id )}}" class="flex">
-                                    <select name="status" id="status" class="bg-gray-800 rounded-lg">
-                                        <option value="pending">pending</option>
-                                        <option value="revision">revision</option>
-                                        <option value="rejected">rejected</option>
-                                        <option value="approved">accepted</option>
+                                <form action="{{ route('change-status', $data->id) }}" method="POST" class="flex">
+                                    @csrf
+                                    <select name="status" id="status" name="status" class="bg-gray-800 rounded-lg">
+                                        <option value="pending" @selected($data->status == 'pending')>pending</option>
+                                        <option value="revision" @selected($data->status == 'revision')>revision</option>
+                                        <option value="rejected" @selected($data->status == 'rejected')>rejected</option>
+                                        <option value="accepted" @selected($data->status == 'accepted')>accepted</option>
                                     </select>
-                                    <button class="rounded-md mx-2 bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
-                                    type="submit">Update</button>
+                                    @error('status')
+                                        <label class="text-red-500">{{ $message }}</label>
+                                    @enderror
+                                    <button
+                                        class="rounded-md mx-2 bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
+                                        type="submit">Update</button>
                                 </form>
                             @else
                                 {{ $data->status }}
                             @endif
                         </td>
-                        <td class="px-6 py-4">{{ $data->message }}</td>
+                        <td class="px-6 py-4">
+                            @if (Auth::user()->role == 'admin')
+                                <form action="{{ route('update-message', $data->id) }}" method="POST" class="flex">
+                                    @csrf
+                                    <input type="text" id="message" name="message" value="{{ $data->message }}"
+                                        class="bg-gray-800 rounded=lg" placeholder="Add your message">
+                                    <button
+                                        class="rounded-md mx-2 bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
+                                        type="submit">Update</button>
+                                </form>
+                            @else
+                                {{ $data->message }}
+                            @endif
+                        </td>
                         <td class="px-6 py-4">{{ $data->user->name }}</td>
                         <td class="px-6 py-4 flex">
+                            @if ($data->status != 'rejected')
                             <form action="{{ route('req-delete-event', $data->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -63,7 +82,9 @@
                             <button
                                 class="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
                                 onclick="location.href = '{{ route('edit-event', $data->id) }}'">Edit</button>
+                                @endif
                         </td>
+
                     </tr>
                 @endforeach
 
