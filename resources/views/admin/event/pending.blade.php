@@ -72,17 +72,18 @@
                         </td>
                         <td class="px-6 py-4">{{ $data->user->name }}</td>
                         <td class="px-6 py-4 flex">
-                            @if ($data->status != 'rejected')
-                            <form action="{{ route('req-delete-event', $data->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white">Delete</button>
-                            </form>
-                            <button
-                                class="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
-                                onclick="location.href = '{{ route('edit-event', $data->id) }}'">Edit</button>
-                                @endif
+                            @if ($data->status != 'rejected' && $data->status != 'accepted')
+                                <form action="{{ route('req-delete-event', $data->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white">Delete</button>
+                                </form>
+                                <button
+                                    class="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white"
+                                    onclick="location.href = '{{ route('edit-event', $data->id) }}'">Edit</button>
+                            @endif
+
                         </td>
 
                     </tr>

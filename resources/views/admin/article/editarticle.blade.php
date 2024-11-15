@@ -44,7 +44,7 @@
                 <div>
                     <label for="content" class="block text-sm font-medium leading-6 text-gray-900">Content</label>
                     <div id="quill-editor" class="mb-3" style="height: 300px;">{!! $article->content !!}</div>
-                    <textarea hidden rows="3" class="mb-3 d-none" name="content" id="content" value="{{ $article->content }}"></textarea>
+                    <textarea hidden rows="3" class="mb-3 d-none" name="content" id="content">{{ $article->content }}</textarea>
                     @error('content')
                         <label class="text-red-500">{{ $message }}</label>
                     @enderror

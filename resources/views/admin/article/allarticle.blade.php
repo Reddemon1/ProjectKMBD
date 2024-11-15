@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            {{ var_dump($datas) }}
+            {{-- {{ var_dump($datas) }} --}}
             @foreach ($datas as $data)
                 <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

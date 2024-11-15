@@ -69,7 +69,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Panel")->group(function(){
     Route::get('/', function () {
-        return view("admin/Admin");
+        $article = Article::all();
+        $event = Event::all();
+        $production = Production::all();
+        return view("admin/Admin", compact(['article','event','production']));
     });
 
     Route::get('/about-us', function(){
