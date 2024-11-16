@@ -1,4 +1,4 @@
-<nav class="bg-gray-800" x-data="{ isOpen: false }">
+<nav class="bg-[#00ABFB]" x-data="{ isOpen: false }">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
@@ -98,17 +98,17 @@
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a href="/"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
                 aria-current="page">Home</a>
             <a href="/AboutUs"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">About
                 Us</a>
             <a href="/Production"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Production</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Production</a>
             <a href="/Events"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Events</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Events</a>
             <a href="/Partner"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Partner</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Partner</a>
         </div>
         @if (Auth::check())
             <div class="border-t border-gray-700 pb-3 pt-4">
@@ -120,16 +120,16 @@
                     </div>
                     <div class="ml-3">
                         <div class="text-base font-medium leading-none text-white">{{ Auth::user()->name }}</div>
-                        <div class="text-sm font-medium leading-none text-gray-400">{{ Auth::user()->email }}</div>
+                        <div class="text-sm font-medium leading-none text-white">{{ Auth::user()->email }}</div>
                     </div>
 
                 </div>
                 <div class="mt-3 space-y-1 px-2">
                     <a href="#"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300  hover:text-white">Your
                         Profile</a>
                     <a href="{{ route('logout') }}"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300  hover:text-white">Sign
                         out</a>
                 </div>
             </div>
