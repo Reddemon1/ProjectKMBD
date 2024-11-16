@@ -12,6 +12,7 @@ To run this website do
 ``
 php artisan serve
 ``
+<br>
 ``
 npm run dev or npm run build
 ``
