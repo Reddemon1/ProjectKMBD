@@ -7,14 +7,11 @@ php -v
 ``
 <br>
 To update your php you can downloadp php new version by clicking <a href="https://windows.php.net/downloads/releases/php-8.3.12-nts-Win32-vs16-x64.zip">here
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To run this website do
+``
+php artisan serve
+``
+``
+npm run dev or npm run build
+``
