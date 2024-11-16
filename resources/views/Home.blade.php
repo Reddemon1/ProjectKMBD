@@ -7,24 +7,26 @@
                 All Productions</button>
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-1">
             <!-- Card 1 -->
             @foreach ($production as $data)
                 <div class="w-full bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
                     style="height:390px;display: flex; flex-direction: row;">
                     <iframe class="rounded-l-lg w-5/12 h-auto" src="{{ $data->embeded_link }}">
-                    </iframe <div class="p-2 flex-1 flex flex-col justify-between">
-                    <div class="content w-10/12 mx-10 my-10 overflow-y-auto">
-                        <a href="#">
-                            <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
-                                {{ $data->title }}
-                            </h5>
-                        </a>
-                        <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                            {!! $data->description !!}
-                        </p>
-                    </div>
+                    </iframe>
+                    <div class="p-2 flex-1 flex flex-col justify-between">
+                        <div class="content w-10/12 mx-10 my-10 overflow-y-auto">
+                            <a href="#">
+                                <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
+                                    {{ $data->title }}
+                                </h5>
+                            </a>
+                            <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
+                                {!! $data->description !!}
+                            </p>
+                        </div>
 
+                    </div>
                 </div>
             @endforeach
         </div>
@@ -41,7 +43,7 @@
         <div class="flex flex-wrap gap-1 grid-cols-4 ">
             <!-- Card 1 -->
             @foreach ($article as $data)
-                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
+                <div  onclick="location.href='{{ route('article-detail',$data->id)}}'" class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; display: flex; flex-direction: column;">
                     {{-- <img class="rounded-t-lg" src="{{ asset($data->image) }}" alt="" /> --}}
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
@@ -55,10 +57,10 @@
                                 </h5>
                             </a>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                                {!! Str::limit($data->content, 100) !!}
+                                {!! Str::limit(strip_tags($data->content, 100)) !!}
                             </p>
                         </div>
-                        <button type="submit"
+                        <button onclick="location.href='{{ route('article-detail',$data->id)}}'"
                             class="mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Read Detail
                         </button>
@@ -91,7 +93,7 @@
                                 </h5>
                             </a>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                                {!! Str::limit($data->benefit, 100) !!}
+                                {!! Str::limit(strip_tags($data->benefit, 100)) !!}
                             </p>
                         </div>
                         <button type="button"
@@ -134,35 +136,32 @@
         <div class="flex flex-wrap gap-4 grid-cols-4 flex-row">
             <!-- Card 1 -->
             @foreach ($event as $data)
-                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
+                <div onclick="location.href='{{ route('event-detail',$data->id)}}'" class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; display: flex; flex-direction: column;">
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
                         alt="{{ $data->title }}" />
-
-                    <div class="p-2 flex-1 flex flex-col justify-between">
+                    <div class="p-2 flex-1 flex flex-col justify-between w-auto">
                         <div class="content">
-                            <a href="#">
-                                <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
-                                    {{ $data->title }}
-                                </h5>
-                            </a>
+                            <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
+                                {{ $data->title }}
+                            </h5>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                                {!! Str::limit($data->description, 100) !!}
+                                {!! Str::limit(strip_tags($data->description, 100)) !!}
                             </p>
                             <p class="mb-2 text-m font-normal text-black my-3">
-                                <span class="font-bold">Date : </span>{{ $data->date }}
+                                <span class="font-bold">Date:</span> {{ $data->date }}
                             </p>
                         </div>
-                        @if ($data->date < date('yyyy-mm-dd'))
+                        @if ($data->date < date('Yyyy-mm-dd'))
                             <button onclick="location.href='{{ $data->registration_link }}'"
-                                class="mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                class="mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500">
                                 Register
                             </button>
                         @endif
-
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
 

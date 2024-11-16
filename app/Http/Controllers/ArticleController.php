@@ -47,7 +47,11 @@ class ArticleController extends Controller
         $article = Article::find($id);
         return view('admin.article.editarticle', compact('article'));
     }
-
+    public function show($id)
+    {
+        $data = Article::find($id);
+        return view('articledetail',compact('data'));
+    }
     /**
      * Update the specified resource in storage.
      */

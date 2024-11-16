@@ -84,7 +84,8 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
         Route::put('/req-edit-about', [OrganizationController::class,'update'])->name('req-edit-about');
     });
     
-
+    Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
+    Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
 
     Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){
         Route::get('/all-articles', [ArticleController::class,'index'])->name("all-articles");
