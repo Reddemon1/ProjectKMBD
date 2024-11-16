@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Requests\UpdateOrganizationRequest;
+use Illuminate\Support\Facades\Storage;
 
 class OrganizationController extends Controller
 {
@@ -13,7 +14,8 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        //
+        $data = Organization::first();
+        return view("admin/about", compact('data'));
     }
 
     /**
@@ -51,9 +53,24 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationRequest $request, Organization $organization)
+    public function update(UpdateOrganizationRequest $request)
     {
-        //
+        $partner = Organization::first();
+        $validated = $request->validated();
+
+        // dd($validated);
+        if($request->structure != NULL){
+            Storage::delete($partner->structure);
+            $filePath = $request->file('structure')->store('about-us', 'public');
+            $validated['structure'] = "storage/" . $filePath;
+        }
+        if($request->logo != NULL){
+            Storage::delete($partner->logo);
+            $filePath = $request->file('logo')->store('about-us', 'public');
+            $validated['logo'] = "storage/" . $filePath;
+        }
+        $partner->update($validated);
+        return redirect(route('about-us'));
     }
 
     /**

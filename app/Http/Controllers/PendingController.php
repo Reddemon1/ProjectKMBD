@@ -6,9 +6,12 @@ use App\Models\Pending;
 use App\Http\Requests\StorePendingRequest;
 use App\Http\Requests\UpdatePendingRequest;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 // use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 // use Illuminate\Support\Facades\Request;
 
 class PendingController extends Controller
@@ -20,9 +23,9 @@ class PendingController extends Controller
     {
         $datas = Pending::with('user');
         if (Auth::user()->role == 'aktivis') {
-            $datas = $datas->where('user_id', '=', Auth::id())->get();
+            $datas = $datas->where('user_id', '=', Auth::id())->orderBy('status','desc')->get();
         } else {
-            $datas = $datas->get();
+            $datas = $datas->orderBy('status','desc')->get();
         }
         return view("admin/event/pending
         ", compact('datas'));
@@ -33,7 +36,6 @@ class PendingController extends Controller
         $validated = $request->validate([
             'status' => 'in:pending,revision,rejected,accepted'
         ]);
-
         $data = Pending::find($id);
         $data->status = $validated['status'];
         $data->save();
@@ -86,24 +88,42 @@ class PendingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pending $pending)
+    public function edit($id)
     {
-        //
+        $event = Pending::find($id);
+        $user_name = User::find($event->user_id);
+        return view('admin.pending-event.editevent', compact(['event','user_name']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePendingRequest $request, Pending $pending)
+    public function update(UpdatePendingRequest $request, $id)
     {
-        //
+        $event = Pending::find($id);
+        $validated = $request->validated();
+        $request['user_id'] = $event->user_id;
+        if($request->image != NULL){
+            Storage::delete($event->image);
+            $filePath = $request->file('image')->store('events', 'public');
+            $validated['image'] = "storage/" . $filePath;
+        }
+
+        $event->update($validated);
+        return redirect(route('pending-event-req'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pending $pending)
+    public function destroy($id)
     {
-        //
+        $data = Pending::findOrFail($id);
+        // echo asset($data->image);
+        // echo
+        Storage::delete($data->image);
+        $data->delete();
+
+        // return redirect()->back();
     }
 }

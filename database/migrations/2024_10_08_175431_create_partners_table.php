@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('name');
-            $table->string('logo');
+            $table->string('image');
             $table->longText('benefit');
             $table->enum("category",['Card','Sponsor','MediaPartner']);
             $table->timestamps();

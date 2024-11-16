@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateOrganizationRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateOrganizationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check() && Auth::user()->role == 'admin';;
     }
 
     /**
@@ -22,7 +23,16 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'structure' => 'nullable|mimes:jpeg,png,jpg,gif|max:3072',
+            'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:3072',
+            'logo_desc' => 'required',
+            'vision' => 'required',
+            'mission' => 'required',
+            'organization_desc' => 'required',
+            'period' => 'required',
+            'active_members' => 'required',
+            'area' => 'required',
+            'alumni_count' => 'required',
         ];
     }
 }

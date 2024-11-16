@@ -11,7 +11,7 @@
                         <x-nav-link href="/Control-Panel" :active="request()->is('/Control-Panel')">Dashboard</x-nav-link>
                         @if (Auth::check() && Auth::user()->role == 'admin')
                             <x-nav-link href="{{ route('about-us') }}" :active="request()->is('AboutUs')">About Us</x-nav-link>
-                            <x-nav-link href="{{ route('all-production') }}" :active="request()->is('Production')">Production</x-nav-link>
+                            <x-nav-link href="{{ route('all-productions') }}" :active="request()->is('Production')">Production</x-nav-link>
                             <x-nav-link href="{{ route('all-articles') }}" :active="request()->is('Articles')">Articles</x-nav-link>
                             <x-nav-link href="{{ route('all-partners') }}" :active="request()->is('Partner')">Partners</x-nav-link>
                         @endif

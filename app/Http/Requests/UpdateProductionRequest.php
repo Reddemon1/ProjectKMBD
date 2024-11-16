@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateProductionRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class UpdateProductionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+
+        return Auth::check() && Auth::user()->role == 'admin';
     }
 
     /**
@@ -22,7 +24,20 @@ class UpdateProductionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:200',
+            'description' => 'required|',
+            'embeded_link' => ['required', 'url', function ($attribute, $value, $fail) {
+                if (!preg_match('/^(https:\/\/)(www\.)?(youtube\.com\/|youtu\.be\/)/', $value)) {
+                    return $fail('The :attribute must be a valid YouTube URL starting with HTTPS.');
+                }
+            }],
+            'category' => 'required|in:Video,Podcast',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'Isi :attribute kocak',
         ];
     }
 }

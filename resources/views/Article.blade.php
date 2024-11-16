@@ -1,14 +1,11 @@
 <x-layout>
-    <x-slot:title>
-        {{ $title }}
-    </x-slot:title>
-    <h1 class="text-5xl text-bold">Article</h1>
+    <h1 class="text-3xl font-bold my-10">Article</h1>
 
-    <div class="flex flex-wrap gap-4">
+    <div class="flex flex-wrap gap-1 grid-cols-4 justify-between">
         <!-- Card 1 -->
         @foreach ($datas as $data)
-            <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
-                style="width: 300px; display: flex; flex-direction: column;">
+            <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
+                style="width: 290px; display: flex; flex-direction: column;">
                 {{-- <img class="rounded-t-lg" src="{{ asset($data->image) }}" alt="" /> --}}
                 <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}" alt="{{ $data->title }}" />
 

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Production extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'embeded_link',
+        'category'
+    ];
 }

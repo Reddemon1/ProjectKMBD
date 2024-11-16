@@ -48,11 +48,12 @@ class EventController extends Controller
         $validated['image'] = "storage/" . $filePath;
         if(Auth::user()->role == 'admin'){
             Event::create($validated);
+            return redirect(route('all-events'));
         }else if(Auth::user()->role == 'aktivis'){
             Pending::create($validated);
+            return redirect(route('pending-event-req'));
         }
 
-        return redirect(route('all-events'));
     }
 
     /**
@@ -78,16 +79,16 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, $id)
     {
-        $article = Event::find($id);
+        $event = Event::find($id);
         $validated = $request->validated();
-        $request['user_id'] = $article->user_id;
+        $request['user_id'] = $event->user_id;
         if($request->image != NULL){
-            Storage::delete($article->image);
+            Storage::delete($event->image);
             $filePath = $request->file('image')->store('events', 'public');
             $validated['image'] = "storage/" . $filePath;
         }
 
-        $article->update($validated);
+        $event->update($validated);
         return redirect(route('all-events'));
     }
 

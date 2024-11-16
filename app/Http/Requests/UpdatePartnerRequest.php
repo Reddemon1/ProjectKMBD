@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdatePartnerRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdatePartnerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check() && Auth::user()->role == 'admin';
     }
 
     /**
@@ -22,7 +23,18 @@ class UpdatePartnerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:100',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:1024',
+            'benefit' => 'required',
+            'category' => 'required|in:Card,Sponsor,MediaPartner',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'Isi :attribute kocak',
+            'image.max' => 'Foto maksimal 1mb woe',
+            'category.in' => 'Please select either Card, Sponsor, or MediaPartner'
         ];
     }
 }

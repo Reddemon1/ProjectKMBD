@@ -10,6 +10,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> 
     <title>Home</title>
 </head>
+
 <body class="h-full">
 
 <div class="min-h-full">
@@ -22,5 +23,28 @@
     </div>
   </main>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const readButtons = document.querySelectorAll('.read-detail-btn');
+      const closeButtons = document.querySelectorAll('.close-detail-btn');
+      const allFronts = document.querySelectorAll('.front');
+      const allDetails = document.querySelectorAll('.detail');
+
+      readButtons.forEach((btn, index) => {
+          btn.addEventListener('click', () => {
+              allFronts[index].style.display = 'none';  // Hide the front
+              allDetails[index].style.display = 'flex'; // Show the detail
+          });
+      });
+
+      closeButtons.forEach((btn, index) => {
+          btn.addEventListener('click', () => {
+              allFronts[index].style.display = 'flex';  // Show the front
+              allDetails[index].style.display = 'none'; // Hide the detail
+          });
+      });
+  });
+</script>
 </body>
 </html>

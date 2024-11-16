@@ -13,7 +13,8 @@ class ProductionController extends Controller
      */
     public function index()
     {
-        //
+        $datas = Production::all();
+        return view("admin/production/allproduction", compact('datas'));
     }
 
     /**
@@ -21,7 +22,8 @@ class ProductionController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin/production/addproduction");
+        
     }
 
     /**
@@ -29,7 +31,10 @@ class ProductionController extends Controller
      */
     public function store(StoreProductionRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Production::create($validated);
+
+        return redirect(route('all-productions'));
     }
 
     /**
@@ -43,24 +48,32 @@ class ProductionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Production $production)
+    public function edit($id)
     {
-        //
+        $production = Production::find($id);
+        return view('admin.production.editproduction', compact('production'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductionRequest $request, Production $production)
+    public function update(UpdateProductionRequest $request, $id)
     {
-        //
+        $production = Production::find($id);
+        $validated = $request->validated();
+
+        $production->update($validated);
+        return redirect(route('all-productions'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Production $production)
+    public function destroy($id)
     {
-        //
+        $data = Production::findOrFail($id);
+        $data->delete();
+
+        return redirect(route('all-productions'));
     }
 }

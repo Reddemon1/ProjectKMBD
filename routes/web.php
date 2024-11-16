@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PendingController;
 use App\Http\Controllers\ProductionController;
@@ -12,13 +13,19 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Models\Article;
 use App\Models\Event;
 use App\Models\Partner;
+use App\Models\Pending;
 use App\Models\Production;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'dashboard')->name('dashboard');
 Route::get('/', function () {
-    return view('Home', ['title'=>'Home Page']);
+        $article = Article::all()->take(4);
+        $event = Event::all()->take(4);
+        $production = Production::all()->take(4);
+        $partner = Partner::all()->take(4);
+    return view('Home',compact(['article','event','production','partner']));
 })->name("home");
 
 Route::get('/Login', function () {
@@ -39,47 +46,47 @@ Route::get('/AboutUs', function () {
 });
 
 Route::get('/Production', function () {
-    return view('Production',['title'=>'Production']);
+    $production = Production::all();
+    return view('Production',compact('production'));
 });
 
 Route::get('/Events', function () {
-    return view('Events',['title'=>'Events']);
+    $event = Event::all()->take(4);
+    return view('Events',compact('event'));
 });
 Route::get('/Article', function () {
     return view('Article',['title'=>'Article','datas' => Article::all()]);
 });
 
 Route::get('/Partner', function () {
-    return view('Partner',['title'=>'Partner']);
+        $partner = Partner::all()->take(4);
+    return view('Partner',compact('partner'));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 
 Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Panel")->group(function(){
     Route::get('/', function () {
-        $article = Article::all();
-        $event = Event::all();
-        $production = Production::all();
-        return view("admin/Admin", compact(['article','event','production']));
+        if(Auth::user()->role == 'admin'){
+            $article = Article::all()->take(4);
+            $event = Event::all()->take(4);
+            $production = Production::all()->take(4);
+            $partner = Partner::all()->take(4);
+            return view("admin/Admin", compact(['article','event','production','partner']));
+        }else{
+            $event = Event::where('user_id','=',Auth::id())->get()->take(4);
+            return view("admin/Admin", compact(['event']));
+        }
     });
 
-    Route::get('/about-us', function(){
-        return view("admin/Admin");
-    })->name('about-us');
+    Route::middleware([RoleMiddleware::class.':admin'])->group(function(){
+        Route::get('/about-us', [OrganizationController::class,'index'])->name('about-us');
+        Route::put('/req-edit-about', [OrganizationController::class,'update'])->name('req-edit-about');
+    });
+    
 
-    Route::prefix("admin-article")->group(function(){
+
+    Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){
         Route::get('/all-articles', [ArticleController::class,'index'])->name("all-articles");
         Route::get('/add-article', [ArticleController::class,'create'])->name("add-new-article");
         Route::get('/edit-article/{id}', [ArticleController::class,'edit'])->name("edit-article");
@@ -95,78 +102,43 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
     Route::prefix("admin-event")->group(function(){
         Route::get('/all-events', [EventController::class,'index'])->name("all-events");
         Route::get('/add-event', [EventController::class,'create'])->name("add-new-event");
-        Route::get('/edit-event/{id}', [EventController::class,'edit'])->name("edit-event");
-
+        Route::middleware([RoleMiddleware::class.':admin'])->group(function() {
+            Route::get('/edit-event/{id}', [EventController::class,'edit'])->name("edit-event");
+            Route::put('/req-edit-event/{id}',[EventController::class,"update"])->name('req-edit-event');
+            Route::delete('/req-delete-event/{id}', [EventController::class,'destroy'])->name("req-delete-event");
+            Route::post('/change-status/{id}', [PendingController::class,'updateStatus'])->name("change-status");
+            Route::post('/update-message/{id}', [PendingController::class,'updateMessage'])->name("update-message");    
+        });
+        Route::get('/edit-pending-event/{id}', [PendingController::class,'edit'])->name("edit-pending-event");
         Route::get('/pending-event', [PendingController::class,'index'])->name("pending-event-req");
-        Route::post('/change-status/{id}', [PendingController::class,'updateStatus'])->name("change-status");
-        Route::post('/update-message/{id}', [PendingController::class,'updateMessage'])->name("update-message");
-
-
-        Route::delete('/req-delete-event/{id}', [EventController::class,'destroy'])->name("req-delete-event");
+        Route::put('/req-edit-pending-event/{id}',[PendingController::class,"update"])->name('req-edit-pending-event');
+        Route::delete('/req-delete-pending-event/{id}',[PendingController::class,"destroy"])->name('req-delete-pending-event');
+        
         Route::post('/req-new-event',[EventController::class,"store"])->name('req-new-event');
-        Route::put('/req-edit-event/{id}',[EventController::class,"update"])->name('req-edit-event');
         // Route::post('/req-new-article',[ArticleController::class,"store"]);
     });
 
 
-    Route::prefix("admin-production")->middleware(RoleMiddleware::class.':admin')->group(function(){
-        Route::get('/all-productions', function() {
-            $datas = Production::all();
-            return view("admin/production/allproduction",compact('datas'));
-        })->name("all-productions");
-        Route::get('/add-production', function(){
-            return view("admin/production/addproduction");
-        })->name("add-new-production");
-        Route::get('/delete-production/{id}', function($id){
-            return view("admin/production/deleteproduction");
-        })->name("delete-production");
-        Route::get('/edit-production/{id}', function($id){
-            return view("admin/production/editproduction");
-        })->name("edit-production");
+    Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-partner")->group(function(){
+        Route::get('/all-partners', [PartnerController::class,'index'])->name("all-partners");
+        Route::get('/add-partner', [PartnerController::class,'create'])->name("add-new-partner");
+        Route::get('/edit-partner/{id}', [PartnerController::class,'edit'])->name("edit-partner");
 
-        Route::post('/req-new-production',[ProductionController::class,"store"]);
-        Route::post('/req-edit-production',[ProductionController::class,"store"]);
-        Route::post('/req-new-production',[ProductionController::class,"store"]);
+        Route::delete('/req-delete-partner/{id}', [PartnerController::class,'destroy'])->name("req-delete-partner");
+        Route::post('/req-new-partner',[PartnerController::class,"store"])->name('req-new-partner');
+        Route::put('/req-edit-partner/{id}',[PartnerController::class,"update"])->name('req-edit-partner');
+        // Route::post('/req-new-article',[ArticleController::class,"store"]);
     });
 
-    Route::prefix("admin-partner")->middleware(RoleMiddleware::class.':admin')->group(function(){
-        Route::get('/all-partners', function() {
-            $datas = Partner::all();
-            return view("admin/partner/allpartner",compact('datas'));
-        })->name("all-partners");
-        Route::get('/add-partner', function(){
-            return view("admin/partner/addpartner");
-        })->name("add-new-partner");
-        Route::get('/delete-partner/{id}', function($id){
-            return view("admin/partner/deletepartner");
-        })->name("delete-partner");
-        Route::get('/edit-partner/{id}', function($id){
-            return view("admin/partner/editpartner");
-        })->name("edit-partner");
+    Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-production")->group(function(){
+        Route::get('/all-productions', [ProductionController::class,'index'])->name("all-productions");
+        Route::get('/add-production', [ProductionController::class,'create'])->name("add-new-production");
+        Route::get('/edit-production/{id}', [ProductionController::class,'edit'])->name("edit-production");
 
-        Route::post('/req-new-partner',[PartnerController::class,"store"]);
-        Route::post('/req-edit-partner',[PartnerController::class,"store"]);
-        Route::post('/req-new-partner',[PartnerController::class,"store"]);
-    });
-
-    Route::prefix("admin-production")->group(function(){
-        Route::get('/all-productions', function() {
-            $datas = Production::all();
-            return view("admin/production/allproduction",compact('datas'));
-        })->name("all-production");
-        Route::get('/add-production', function(){
-            return view("admin/production/addproduction");
-        })->name("add-new-production");
-        Route::get('/delete-production/{id}', function($id){
-            return view("admin/production/deleteproduction");
-        })->name("delete-production");
-        Route::get('/edit-production/{id}', function($id){
-            return view("admin/production/editproduction");
-        })->name("edit-production");
-
-        Route::post('/req-new-production',[ProductionController::class,"store"]);
-        Route::post('/req-edit-production',[ProductionController::class,"store"]);
-        Route::post('/req-new-production',[ProductionController::class,"store"]);
+        Route::delete('/req-delete-production/{id}', [ProductionController::class,'destroy'])->name("req-delete-production");
+        Route::post('/req-new-production',[ProductionController::class,"store"])->name('req-new-production');
+        Route::put('/req-edit-production/{id}',[ProductionController::class,"update"])->name('req-edit-production');
+        // Route::post('/req-new-article',[ArticleController::class,"store"]);
     });
 });
 
