@@ -23,7 +23,7 @@
                             <label for="password"
                                 class="block text-sm font-medium leading-6 text-gray-900">Password</label>
                             <div class="text-sm">
-                                <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
+                                <a href="#" class="font-semibold text-[#00ABFB] hover:text-[black]">Forgot
                                     password?</a>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
 
                     <div>
                         <button type="submit"
-                            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
+                            class="flex w-full justify-center rounded-md bg-[#00ABFB] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                             in</button>
                     </div>
                 </form>

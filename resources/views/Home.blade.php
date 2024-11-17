@@ -20,7 +20,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Feature 1 -->
-                <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                <div class="bg-white shadow-lg rounded-lg p-3 text-center">
                     <div class="text-[#00ABFB] text-5xl mb-4">
                         <i class="fas fa-users"></i>
                     </div>
@@ -28,15 +28,15 @@
                     <p class="text-gray-600 mt-2">nonton karya kita </p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                <div class="bg-white shadow-lg rounded-lg p-3 text-center">
                     <div class="text-[#00ABFB] text-5xl mb-4">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <h3 class="font-semibold text-xl">Events</h3>
-                    <p class="text-gray-600 mt-2">bisa daftar event bos</p>
+                    <p class="text-gray-600 mt-2">bisa daftar event bos gacrotd </p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+                <div class="bg-white shadow-lg rounded-lg p-3 text-center">
                     <div class="text-[#00ABFB] text-5xl mb-4">
                         <i class="fas fa-lightbulb"></i>
                     </div>
@@ -103,7 +103,7 @@
         <div class="flex flex-wrap gap-1 grid-cols-4 ">
             <!-- Card 1 -->
             @foreach ($article as $data)
-                <div  onclick="location.href='{{ route('article-detail',$data->id)}}'" class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
+                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; display: flex; flex-direction: column;">
                     {{-- <img class="rounded-t-lg" src="{{ asset($data->image) }}" alt="" /> --}}
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
@@ -111,11 +111,11 @@
 
                     <div class="p-2 flex-1 flex flex-col justify-between">
                         <div class="content">
-                            <a href="#">
+                            <p>
                                 <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
                                     {{ $data->title }}
                                 </h5>
-                            </a>
+                            </p>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
                                 {!! Str::limit(strip_tags($data->content, 100)) !!}
                             </p>

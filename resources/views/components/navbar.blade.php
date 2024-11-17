@@ -71,7 +71,7 @@
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
                 <button @click="isOpen = !isOpen" type="button"
-                    class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    class="relative inline-flex items-center justify-center rounded-md  p-2 text-white  hover:text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     aria-controls="mobile-menu" aria-expanded="false">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
@@ -98,17 +98,17 @@
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a href="/"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-gray-300"
                 aria-current="page">Home</a>
             <a href="/AboutUs"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">About
+                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-gray-300">About
                 Us</a>
             <a href="/Production"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Production</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-gray-300">Production</a>
             <a href="/Events"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Events</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-gray-300">Events</a>
             <a href="/Partner"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Partner</a>
+                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:text-gray-300">Partner</a>
         </div>
         @if (Auth::check())
             <div class="border-t border-gray-700 pb-3 pt-4">
@@ -126,20 +126,15 @@
                 </div>
                 <div class="mt-3 space-y-1 px-2">
                     <a href="#"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300  hover:text-white">Your
+                        class="block rounded-md px-3 py-2 text-base font-medium text-white  hover:text-gray-300">Your
                         Profile</a>
                     <a href="{{ route('logout') }}"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300  hover:text-white">Sign
+                        class="block rounded-md px-3 py-2 text-base font-medium text-white  hover:text-gray-300">Sign
                         out</a>
                 </div>
             </div>
         @else
-            <x-nav-link href="/Login"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                :active="request()->is('Login')">Login</x-nav-link>
-            <x-nav-link href="/Register"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                :active="request()->is('Register')">Register</x-nav-link>
+            
         @endif
 
     </div>
