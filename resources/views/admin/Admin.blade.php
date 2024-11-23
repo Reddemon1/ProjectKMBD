@@ -3,13 +3,13 @@
     @if (Auth::user()->role == 'admin')
     <div class="article">
         <div class="card flex m-10 justify-between">
-            <h1 class="text-2xl font-bold">All Article</h1>
-            <button onclick="location.href={{ route('all-articles') }}"
+            <h1 class="text-2xl font-bold">Article</h1>
+            <a href="{{ route('all-articles') }}"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Article</button>
+                All Article</a>
         </div>
 
-        <div class="flex flex-wrap gap-1 grid-cols-4 ">
+        <div class="flex flex-wrap gap-1 grid-cols-4  ">
             <!-- Card 1 -->
             @foreach ($article as $data)
                 <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
@@ -20,19 +20,19 @@
 
                     <div class="p-2 flex-1 flex flex-col justify-between">
                         <div class="content">
-                            <a href="#">
+                            <p>
                                 <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
                                     {{ $data->title }}
                                 </h5>
-                            </a>
+                            </p>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                                {!! Str::limit($data->content, 100) !!}
+                                {!! Str::limit(strip_tags($data->content, 100)) !!}
                             </p>
                         </div>
-                        <button type="submit"
-                            class="mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <a href="{{ route('article-detail',$data->id)}}'"
+                            class="mt-auto flex w-full justify-center rounded-md bg-[#991B1B] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd]  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Read Detail
-                        </button>
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -41,22 +41,22 @@
     <div class="partner">
         <div class="card flex m-10 justify-between">
             <h1 class="text-2xl font-bold">All Partner</h1>
-            <button onclick="location.href={{ route('all-partners') }}"
+            <a href="{{ route('all-partners') }}"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Production</button>
+                All Partner</a>
         </div>
 
         <div class="flex flex-wrap gap-1 grid-cols-4 ">
             <!-- Card 1 -->
             @foreach ($partner as $data)
-                <div class="front bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
+                <div class="front bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; height:310px;display: flex; flex-direction: column;">
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
                         alt="{{ $data->name }}" />
 
                     <div class="p-2 flex-1 flex flex-col justify-between">
                         <div class="content">
-                            <a href="#">
+                            <a >
                                 <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
                                     {{ $data->name }}
                                 </h5>
@@ -66,13 +66,13 @@
                             </p>
                         </div>
                         <button type="button"
-                            class="read-detail-btn mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            Read Detail
+                        class="read-detail-btn mt-auto flex w-full justify-center rounded-md bg-[#991B1B] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Read Detail
                         </button>
                     </div>
                 </div>
 
-                <div class="detail bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
+                <div class="detail bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; height:310px; display: none; flex-direction: column;">
                     <div class="p-2 flex-1 flex flex-col justify-between">
                         <div class="content mx-5 my-5">
@@ -86,7 +86,7 @@
                             </p>
                         </div>
                         <button type="button"
-                            class="close-detail-btn mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        class="close-detail-btn mt-auto flex w-full justify-center rounded-md bg-[#991B1B] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Close Detail
                         </button>
                     </div>
@@ -97,9 +97,9 @@
     <div class="production">
         <div class="card flex m-10 justify-between">
             <h1 class="text-2xl font-bold">All Production</h1>
-            <button onclick="location.href={{ route('all-productions') }}"
+            <a href="{{ route('all-productions') }}"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Productions</button>
+                All Productions</a>
         </div>
 
         <div class="">
@@ -128,44 +128,44 @@
     
     <div class="event">
         <div class="card flex m-10 justify-between">
-            <h1 class="text-2xl font-bold">Total Event</h1>
-            <button onclick="location.href={{ route('all-events') }}"
+            <h1 class="text-2xl font-bold">Our Event</h1>
+            <a href="{{ route('all-events') }}"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Events</button>
+                All Events</a>
         </div>
 
-        <div class="flex flex-wrap gap-1 grid-cols-4 ">
+        <div class="flex flex-wrap gap-4 grid-cols-4 flex-row">
             <!-- Card 1 -->
             @foreach ($event as $data)
-                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
-                    style="width: 290px; height:410px;display: flex; flex-direction: column;">
+            
+                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
+                    style="width: 290px; display: flex; flex-direction: column;">
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
                         alt="{{ $data->title }}" />
-
-                    <div class="p-2 flex-1 flex flex-col justify-between">
+                    <div class="p-2 flex-1 flex flex-col justify-between w-auto">
                         <div class="content">
-                            <a href="#">
-                                <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
-                                    {{ $data->title }}
-                                </h5>
-                            </a>
+                            <h5 class="mb-2 text-xl font-extrabold tracking-tight text-black dark:text-black">
+                                {{ $data->title }}
+                            </h5>
                             <p class="mb-2 text-xs font-normal text-gray-700 dark:text-gray-400">
-                                {!! Str::limit($data->description, 100) !!}
+                                {!! Str::limit(strip_tags($data->description, 100)) !!}
                             </p>
                             <p class="mb-2 text-m font-normal text-black my-3">
-                                <span class="font-bold">Date : </span>{{ $data->date }}
+                                <span class="font-bold">Date:</span> {{ $data->date }}
                             </p>
                         </div>
-                        @if ($data->date < date('yyyy-mm-dd'))
-                            <button onclick="location.href='{{ $data->registration_link }}'"
-                                class="mt-auto flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        @if ($data->date >= date('Y-m-d'))
+                            <a href="{{ $data->registration_link }}""
+                                class="mt-auto flex w-full justify-center rounded-md bg-[#991B1B] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd]">
                                 Register
-                            </button>
+                            </a>
+                            @else
+                                 <p>Registration not available</p>
                         @endif
-
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
     

@@ -41,6 +41,7 @@ Route::post('/RequestRegister', [UserController::class,'register'])->name('Reque
 Route::get('/logout', [UserController::class,'logout'])->name('logout');
 
 
+
 Route::get('/AboutUs', function () {
     return view('AboutUs',['title'=>'About Us']);
 });
@@ -51,12 +52,16 @@ Route::get('/Production', function () {
 });
 
 Route::get('/Events', function () {
-    $event = Event::all()->take(4);
+    $event = Event::all();
     return view('Events',compact('event'));
 });
 Route::get('/Article', function () {
     return view('Article',['title'=>'Article','datas' => Article::all()]);
 });
+
+
+
+Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
 
 Route::get('/Partner', function () {
         $partner = Partner::all()->take(4);
@@ -84,7 +89,7 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
         Route::put('/req-edit-about', [OrganizationController::class,'update'])->name('req-edit-about');
     });
     
-    Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
+    //Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
     Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
 
     Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){

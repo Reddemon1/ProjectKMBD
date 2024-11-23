@@ -21,16 +21,12 @@
                                 {!! Str::limit(strip_tags($data->content, 100)) !!}
                             </p>
                         </div>
-                        <button onclick="location.href='{{ route('article-detail',$data->id)}}'"
+                        <a href="{{ route('article-detail',$data->id)}}'"
                             class="mt-auto flex w-full justify-center rounded-md bg-[#00ABFB] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd]  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Read Detail
-                        </button>
+                        </a>
                     </div>
                 </div>
             @endforeach
     </div>
-
-
-
-
 </x-layout>

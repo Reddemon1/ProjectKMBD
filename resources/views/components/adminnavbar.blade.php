@@ -8,15 +8,15 @@
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <x-nav-link href="/Control-Panel" :active="request()->is('/Control-Panel')">Dashboard</x-nav-link>
+                        <x-nav-link href="/Control-Panel" :active="request()->Is('Control-Panel')">Dashboard</x-nav-link>
                         @if (Auth::check() && Auth::user()->role == 'admin')
-                            <x-nav-link href="{{ route('about-us') }}" :active="request()->is('AboutUs')">About Us</x-nav-link>
-                            <x-nav-link href="{{ route('all-productions') }}" :active="request()->is('Production')">Production</x-nav-link>
-                            <x-nav-link href="{{ route('all-articles') }}" :active="request()->is('Articles')">Articles</x-nav-link>
-                            <x-nav-link href="{{ route('all-partners') }}" :active="request()->is('Partner')">Partners</x-nav-link>
+                            <x-nav-link href="{{ route('about-us') }}" :active="request()->routeIs('about')">About Us</x-nav-link>
+                            <x-nav-link href="{{ route('all-productions') }}" :active="request()->routeIs('all-productions')">Production</x-nav-link>
+                            <x-nav-link href="{{ route('all-articles') }}" :active="request()->routeIs('all-articles')">Articles</x-nav-link>
+                            <x-nav-link href="{{ route('all-partners') }}" :active="request()->routeIs('all-partners')">Partners</x-nav-link>
                         @endif
-                        <x-nav-link href="{{ route('all-events') }}" :active="request()->is('Events')">Events</x-nav-link>
-                        <x-nav-link href="{{ route('pending-event-req') }}" :active="request()->is('Events')">Pending Events</x-nav-link>
+                        <x-nav-link href="{{ route('all-events') }}" :active="request()->routeIs('all-events')">Events</x-nav-link>
+                        <x-nav-link href="{{ route('pending-event-req') }}" :active="request()->routeIs('pending-event-req')">Pending Events</x-nav-link>
 
                     </div>
                 </div>

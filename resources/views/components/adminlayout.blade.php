@@ -14,7 +14,7 @@
 <body class="h-full">
 
 <div class="min-h-full">
-  <x-adminnavbar> </x-navbar>
+  <x-adminnavbar> </x-adminnavbar>
 
   {{-- <x-header> {{$title}} </x-header> --}}
   <main>
