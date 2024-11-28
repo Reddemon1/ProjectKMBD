@@ -9,6 +9,7 @@ use App\Http\Controllers\PendingController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Auth as MiddlewareAuth;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Article;
 use App\Models\Event;
@@ -27,6 +28,9 @@ Route::get('/', function () {
         $partner = Partner::all()->take(4);
     return view('Home',compact(['article','event','production','partner']));
 })->name("home");
+
+
+
 
 Route::get('/Login', function () {
     return view('auth.Login', ['title'=>'Login Page']);
@@ -64,6 +68,12 @@ Route::get('/Partner', function () {
 });
 
 
+Route::middleware(MiddlewareAuth::class)->group(function() {
+    Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
+    Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
+    
+});
+
 
 Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Panel")->group(function(){
     Route::get('/', function () {
@@ -84,8 +94,6 @@ Route::middleware([RoleMiddleware::class.':admin:aktivis'])->prefix("Control-Pan
         Route::put('/req-edit-about', [OrganizationController::class,'update'])->name('req-edit-about');
     });
     
-    Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
-    Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
 
     Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){
         Route::get('/all-articles', [ArticleController::class,'index'])->name("all-articles");
