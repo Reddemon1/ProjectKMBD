@@ -6,7 +6,8 @@
         <div class="flex flex-wrap gap-1 grid-cols-4 justify-between">
             <!-- Card 1 -->
             @foreach ($event as $data)
-                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-3 mb-3"
+                
+                <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; height:410px;display: flex; flex-direction: column;">
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"
                         alt="{{ $data->title }}" />
@@ -25,11 +26,13 @@
                                 <span class="font-bold">Date : </span>{{ $data->date }}
                             </p>
                         </div>
-                        @if ($data->date < date('yyyy-mm-dd'))
-                            <button onclick="location.href='{{ $data->registration_link }}'"
-                                class="mt-auto flex w-full justify-center rounded-md bg-[#00ABFB] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        @if ($data->date >= date('Y-m-d'))
+                            <a href="{{ $data->registration_link}}"
+                                class=" mt-auto flex w-full justify-center rounded-md bg-[#00ABFB] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:text-[#dddddd] ">
                                 Register
-                            </button>
+                            </a>
+                            @else
+                                 <p>Registration not available</p>
                         @endif
 
                     </div>

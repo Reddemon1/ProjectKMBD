@@ -1,1 +1,1 @@
-<a {{$attributes}} class  =" {{ $active ? ' text-gray-300 ' : 'text-white  hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:text-gray-300" aria-current="{{ $active ? 'page' : false}} "> {{$slot}} </a>
+<a {{$attributes}} class  =" {{ $active ? ' text-gray-300 ' : 'text-white  hover:text-gray-300'}} rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:text-gray-300" aria-current="{{ $active ? 'page' : false}} "> {{$slot}} </a>
