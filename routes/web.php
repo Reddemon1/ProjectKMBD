@@ -66,7 +66,7 @@ Route::get('/Article', function () {
 
 
 Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
-
+Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
 Route::get('/Partner', function () {
     $partner = Partner::all()->take(4);
     return view('Partner', compact('partner'));
@@ -94,7 +94,7 @@ Route::middleware([RoleMiddleware::class . ':admin:aktivis'])->prefix("Control-P
     });
     
     //Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
-    Route::get('/event-detail/{id}',[EventController::class,'show'])->name('event-detail');
+    
 
     Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){
         Route::get('/all-articles', [ArticleController::class,'index'])->name("all-articles");
