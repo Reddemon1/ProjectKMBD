@@ -18,3 +18,17 @@ php artisan serve
 ``
 npm run dev or npm run build
 ``
+Before running there is somestep
+<br>
+<p>After cloning copy the .env-example and rename it to .env <b>ITS A MUST!!</b></p>
+<p>Insert all the database information in .env file</p>
+<br>
+``
+php artisan key:generate
+``
+<br>
+``
+php artisan migrate:fresh --seed
+``
+<br>
+
