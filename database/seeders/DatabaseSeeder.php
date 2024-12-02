@@ -15,14 +15,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        $this->call([
-            ArticleSeeder::class,
-        ]);
+        // $this->call([
+        //     ArticleSeeder::class,
+        // ]);
 
         // $article = Article::factory()->count(10)->create();
 
         // Article::create($article);
-        
+
         User::factory()->create([
             'name' => 'Rionaldo Tio',
             'email' => 'rionaldo0567@gmail.com',
