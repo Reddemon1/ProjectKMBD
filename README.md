@@ -15,26 +15,24 @@ php -v
 ```bash
 composer install
 ```
-<br\>
+
 ```bash
 npm install
 ```
 
-<br\>
 ### 3. Setup Project
 ```bash
 php artisan key:generate
 ```
-<br\>
 ```bash
 php artisan migrate:fresh --seed
 ```
-<br\>
-### 4. Run Project
+### 4. Run Project Laravel
 ```bash
 php artisan serve
 ```
-<br\>
+
+### 5. Run Frontend Processing
 ```bash
 npm run dev
 ```
