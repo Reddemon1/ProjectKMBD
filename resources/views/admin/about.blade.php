@@ -62,7 +62,7 @@
                 @method('PUT')
                 <div>
                     <label for="structure" class="block text-sm font-medium leading-6 text-gray-900">Structure</label>
-                    <img src="{{asset($data->structure)}}" width="100" alt="">
+                    <img src="{{ $data->structure ? asset($data->structure) : '' }}"                    width="100" alt="">
                     <div class="mt-2">
                         <input id="structure" name="structure" type="file" accept="image/png, image/gif, image/jpeg"
                             required
@@ -75,7 +75,7 @@
                 <div>
                     <label for="logo" class="block text-sm font-medium leading-6 text-gray-900">logo</label>
                     <img src="{{asset($data->logo)}}" width="100" alt="">
-                    
+
                     <div class="mt-2">
                         <input id="logo" name="logo" type="file" accept="image/png, image/gif, image/jpeg"
                             required

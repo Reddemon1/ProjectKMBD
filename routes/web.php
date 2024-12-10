@@ -13,6 +13,7 @@ use App\Http\Middleware\Auth as MiddlewareAuth;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Article;
 use App\Models\Event;
+use App\Models\Organization;
 use App\Models\Partner;
 use App\Models\Pending;
 use App\Models\Production;
@@ -47,7 +48,8 @@ Route::get('/logout', [UserController::class,'logout'])->name('logout');
 
 
 Route::get('/AboutUs', function () {
-    return view('AboutUs', ['title' => 'About Us']);
+    $about = Organization::first();
+    return view('AboutUs', compact('about'));
 });
 
 Route::get('/Production', function () {
@@ -92,9 +94,9 @@ Route::middleware([RoleMiddleware::class . ':admin:aktivis'])->prefix("Control-P
         Route::get('/about-us', [OrganizationController::class, 'index'])->name('about-us');
         Route::put('/req-edit-about', [OrganizationController::class, 'update'])->name('req-edit-about');
     });
-    
+
     //Route::get('/article-detail/{id}',[ArticleController::class,'show'])->name('article-detail');
-    
+
 
     Route::middleware([RoleMiddleware::class.':admin'])->prefix("admin-article")->group(function(){
         Route::get('/all-articles', [ArticleController::class,'index'])->name("all-articles");
