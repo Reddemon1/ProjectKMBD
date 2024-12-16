@@ -27,6 +27,10 @@ php artisan key:generate
 ```bash
 php artisan migrate:fresh --seed
 ```
+```bash
+php artisan storege:link
+```
+
 ### 4. Run Project Laravel
 ```bash
 php artisan serve
@@ -40,3 +44,4 @@ npm run dev
  ```bash
 npm run build
 ```
+<h1>NOTE : PLEASE ADD THE NEW DATA FROM ADMIN</h1>
