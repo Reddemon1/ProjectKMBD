@@ -63,8 +63,7 @@
         <div class="card flex m-10 justify-between">
             <h1 class="text-2xl font-bold">All Production</h1>
             <button onclick="location.href='/Production'"
-                class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Productions</button>
+                class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See All</button>
         </div>
 
         <div class="flex flex-col gap-1">
@@ -97,7 +96,7 @@
             <h1 class="text-2xl font-bold">Article</h1>
             <button onclick="location.href='/Article'"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Article</button>
+                All</button>
         </div>
 
         <div class="flex flex-wrap gap-1 grid-cols-4 ">
@@ -134,7 +133,7 @@
             <h1 class="text-2xl font-bold">All Partner</h1>
             <button onclick="location.href='/Partner'"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Partner</button>
+                All</button>
         </div>
 
         <div class="flex flex-wrap gap-1 grid-cols-4">
@@ -190,13 +189,13 @@
             <h1 class="text-2xl font-bold">Our Event</h1>
             <button onclick="location.href='/Events'"
                 class="mt-auto flex justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">See
-                All Events</button>
+                All</button>
         </div>
 
         <div class="flex flex-wrap gap-4 grid-cols-4 flex-row">
             <!-- Card 1 -->
             @foreach ($event as $data)
-            
+
                 <div class="bg-white border border-transparent rounded-lg shadow dark:bg-white dark:border-transparent mx-0 mb-3"
                     style="width: 290px; display: flex; flex-direction: column;">
                     <img class="rounded-t-lg w-[300px] h-[200px]" src="{{ asset($data->image) }}"

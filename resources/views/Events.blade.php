@@ -3,7 +3,7 @@
   <h1 class="text-3xl font-bold my-10">Event</h1>
     <div class="event">
 
-        <div class="flex flex-wrap gap-1 grid-cols-4">
+        <div class="flex flex-wrap gap-8 grid-cols-4">
             <!-- Card 1 -->
             @foreach ($event as $data)
 
